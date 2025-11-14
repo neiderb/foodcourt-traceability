@@ -1,7 +1,8 @@
 package com.foodcourt.traceability.infrastructure.rest.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.foodcourt.foodcourt.infrastructure.rest.filters.JwtFilter;
+import com.foodcourt.traceability.infrastructure.rest.dto.ErrorApiResponse;
+import com.foodcourt.traceability.infrastructure.rest.filters.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,10 +17,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static com.foodcourt.foodcourt.domain.model.auth.enums.UserRole.*;
-import static com.foodcourt.foodcourt.infrastructure.rest.constants.ErrorMessage.ACCESS_DENIED;
-import static com.foodcourt.foodcourt.infrastructure.rest.constants.ErrorMessage.UNAUTHORIZED;
-import static org.springframework.http.HttpMethod.*;
+import static com.foodcourt.traceability.infrastructure.rest.constants.ErrorMessage.ACCESS_DENIED;
+import static com.foodcourt.traceability.infrastructure.rest.constants.ErrorMessage.UNAUTHORIZED;
 
 @Configuration
 @EnableWebSecurity
@@ -46,24 +45,6 @@ public class SecurityConfig {
 			.authorizeHttpRequests(auth -> auth
 				.requestMatchers(ALLOWED_PATHS_SWAGGER).permitAll()
 				.requestMatchers(ALLOWED_PATHS_ACTUATOR).permitAll()
-				// Restaurant endpoints
-				.requestMatchers(POST, RestaurantPath.BASE).hasRole(ADMIN.name())
-				.requestMatchers(GET, RestaurantPath.BASE.concat(RestaurantPath.FIND_BY_ID))
-					.hasAnyRole(ADMIN.name(), OWNER.name())
-				.requestMatchers(GET, RestaurantPath.BASE).hasRole(CLIENT.name())
-				// Dish endpoints
-				.requestMatchers(POST, DishPath.BASE).hasRole(OWNER.name())
-				.requestMatchers(PATCH, DishPath.BASE).hasRole(OWNER.name())
-				.requestMatchers(PATCH, DishPath.BASE.concat(DishPath.TOGGLE_AVAILABILITY)).hasRole(OWNER.name())
-				.requestMatchers(GET, DishPath.BASE.concat(DishPath.BY_RESTAURANT)).hasRole(CLIENT.name())
-				// Order endpoints
-				.requestMatchers(POST, OrderPath.BASE).hasRole(CLIENT.name())
-				.requestMatchers(GET, OrderPath.BASE).hasRole(EMPLOYEE.name())
-				.requestMatchers(GET, OrderPath.BASE.concat(OrderPath.ORDER_BY_ID)).hasRole(EMPLOYEE.name())
-				.requestMatchers(PATCH, OrderPath.BASE.concat(OrderPath.ASSIGN_ORDER_BY_ID)).hasRole(EMPLOYEE.name())
-				.requestMatchers(PATCH, OrderPath.BASE.concat(OrderPath.COMPLETE_ORDER_BY_ID)).hasRole(EMPLOYEE.name())
-				.requestMatchers(PATCH, OrderPath.BASE.concat(OrderPath.DELIVER_ORDER_BY_ID)).hasRole(EMPLOYEE.name())
-				.requestMatchers(PATCH, OrderPath.BASE.concat(OrderPath.CANCEL_ORDER_BY_ID)).hasRole(CLIENT.name())
 				.anyRequest().authenticated())
 			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

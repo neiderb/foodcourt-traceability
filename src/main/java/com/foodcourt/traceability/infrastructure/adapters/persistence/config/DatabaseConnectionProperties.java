@@ -8,5 +8,6 @@ public record DatabaseConnectionProperties(
 	Integer port,
 	String username,
 	String password,
-	String database
+	String database,
+	String authSource
 ) {}

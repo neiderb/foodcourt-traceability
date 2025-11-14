@@ -33,7 +33,7 @@ public class MongoDatasourceConfig extends AbstractMongoClientConfiguration {
 	public MongoClient mongoClient() {
 		MongoCredential credential = MongoCredential.createCredential(
 			properties.username(),
-			properties.database(),
+			properties.authSource(),
 			properties.password().toCharArray()
 		);
 		
