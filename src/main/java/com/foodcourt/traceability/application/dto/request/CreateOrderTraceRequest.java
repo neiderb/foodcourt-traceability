@@ -7,5 +7,6 @@ public record CreateOrderTraceRequest(
 	String previousStatus,
 	String newStatus,
 	Long idEmployee,
-	String emailEmployee
+	String emailEmployee,
+	Long idRestaurant
 ) {}

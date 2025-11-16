@@ -1,6 +1,8 @@
 package com.foodcourt.traceability.infrastructure.adapters.persistence;
 
 import com.foodcourt.traceability.domain.gateways.TraceRepositoryGateway;
+import com.foodcourt.traceability.domain.model.ordertrace.EmployeeRankingReport;
+import com.foodcourt.traceability.domain.model.ordertrace.OrderProcessingTimeReport;
 import com.foodcourt.traceability.domain.model.ordertrace.OrderTrace;
 import com.foodcourt.traceability.domain.model.ordertrace.OrderTraceSummary;
 import com.foodcourt.traceability.infrastructure.adapters.persistence.data.OrderTraceDataRepository;
@@ -33,4 +35,15 @@ public class OrderTraceRepositoryAdapter implements TraceRepositoryGateway {
 			.map(OrderTraceMapper.INSTANCE::toDomainSummary)
 			.toList();
 	}
+	
+	@Override
+	public List<OrderProcessingTimeReport> getOrderProcessingTimeReport(Long idRestaurant) {
+		return orderTraceDataRepository.getOrderProcessingTimeReport(idRestaurant);
+	}
+	
+	@Override
+	public List<EmployeeRankingReport> getEmployeeRankingReport(Long idRestaurant) {
+		return orderTraceDataRepository.getEmployeeRankingReport(idRestaurant);
+	}
+	
 }

@@ -14,5 +14,6 @@ public class OrderTraceSummary {
 	private String newStatus;
 	private LocalDateTime dateTime;
 	private String emailEmployee;
+	private Long idRestaurant;
 	
 }

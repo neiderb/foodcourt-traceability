@@ -13,4 +13,10 @@ public class OrderTraceDocApi {
 	public static final String GET_ORDER_TRACES_SUMMARY = "Get order traces";
 	public static final String GET_ORDER_TRACES_DESCRIPTION = "Order traces retrieved successfully";
 	
+	public static final String GET_ORDER_PROCESSING_REPORT_SUMMARY = "Get order processing report";
+	public static final String GET_ORDER_PROCESSING_REPORT_DESCRIPTION = "Order processing report retrieved successfully";
+	
+	public static final String GET_EMPLOYEE_RANKING_SUMMARY = "Get employee ranking report";
+	public static final String GET_EMPLOYEE_RANKING_DESCRIPTION = "Employee ranking report retrieved successfully";
+	
 }

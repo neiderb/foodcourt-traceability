@@ -18,5 +18,6 @@ public class OrderTrace {
 	private String newStatus;
 	private Long idEmployee;
 	private String emailEmployee;
+	private Long idRestaurant;
 
 }
