@@ -19,6 +19,7 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import static com.foodcourt.traceability.domain.model.auth.enums.UserRole.CLIENT;
+import static com.foodcourt.traceability.domain.model.auth.enums.UserRole.OWNER;
 import static com.foodcourt.traceability.infrastructure.rest.constants.ErrorMessage.ACCESS_DENIED;
 import static com.foodcourt.traceability.infrastructure.rest.constants.ErrorMessage.UNAUTHORIZED;
 import static org.springframework.http.HttpMethod.GET;
@@ -49,6 +50,8 @@ public class SecurityConfig {
 				.requestMatchers(ALLOWED_PATHS_SWAGGER).permitAll()
 				.requestMatchers(ALLOWED_PATHS_ACTUATOR).permitAll()
 				.requestMatchers(GET, TracePath.BASE).hasRole(CLIENT.name())
+				.requestMatchers(GET, TracePath.BASE.concat(TracePath.ORDER_PROCESSING_REPORT)).hasRole(OWNER.name())
+				.requestMatchers(GET, TracePath.BASE.concat(TracePath.EMPLOYEE_RANKING_REPORT)).hasRole(OWNER.name())
 				.anyRequest().authenticated())
 			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

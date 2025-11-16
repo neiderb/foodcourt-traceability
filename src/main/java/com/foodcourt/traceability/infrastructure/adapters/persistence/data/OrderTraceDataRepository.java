@@ -36,11 +36,15 @@ public interface OrderTraceDataRepository extends MongoRepository<OrderTraceData
 		  {
 		    '$project': {
 		      'idOrder': '$_id',
-		      'averageTimeInMinutes': {
-		        '$divide': [
-		          { '$subtract': [ '$dateTimeEnd', '$dateTimeStart' ] },
-		          60000
-		        ]
+		      'averageProcessingTimeInMinutes': {
+		        '$round': [
+		          {
+		            '$divide': [
+		              { '$subtract': [ '$dateTimeEnd', '$dateTimeStart' ] },
+		              60000
+		            ],
+		          }, 2
+		        ],
 		      }
 		    }
 		  }
