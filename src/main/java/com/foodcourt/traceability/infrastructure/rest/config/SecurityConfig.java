@@ -1,6 +1,7 @@
 package com.foodcourt.traceability.infrastructure.rest.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.foodcourt.traceability.infrastructure.rest.constants.paths.TracePath;
 import com.foodcourt.traceability.infrastructure.rest.dto.ErrorApiResponse;
 import com.foodcourt.traceability.infrastructure.rest.filters.JwtFilter;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +18,10 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static com.foodcourt.traceability.domain.model.auth.enums.UserRole.CLIENT;
 import static com.foodcourt.traceability.infrastructure.rest.constants.ErrorMessage.ACCESS_DENIED;
 import static com.foodcourt.traceability.infrastructure.rest.constants.ErrorMessage.UNAUTHORIZED;
+import static org.springframework.http.HttpMethod.GET;
 
 @Configuration
 @EnableWebSecurity
@@ -45,6 +48,7 @@ public class SecurityConfig {
 			.authorizeHttpRequests(auth -> auth
 				.requestMatchers(ALLOWED_PATHS_SWAGGER).permitAll()
 				.requestMatchers(ALLOWED_PATHS_ACTUATOR).permitAll()
+				.requestMatchers(GET, TracePath.BASE).hasRole(CLIENT.name())
 				.anyRequest().authenticated())
 			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

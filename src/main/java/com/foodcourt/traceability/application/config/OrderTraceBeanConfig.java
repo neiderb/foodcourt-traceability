@@ -2,7 +2,9 @@ package com.foodcourt.traceability.application.config;
 
 import com.foodcourt.traceability.domain.gateways.TraceRepositoryGateway;
 import com.foodcourt.traceability.domain.ports.CreateOrderTracePort;
+import com.foodcourt.traceability.domain.ports.GetOrderTraceByIdClientPort;
 import com.foodcourt.traceability.domain.usecases.CreateOrderTraceUseCase;
+import com.foodcourt.traceability.domain.usecases.GetOrderTraceByIdClientUseCase;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,6 +16,15 @@ public class OrderTraceBeanConfig {
 		TraceRepositoryGateway traceRepositoryGateway
 	) {
 		return new CreateOrderTraceUseCase(
+			traceRepositoryGateway
+		);
+	}
+	
+	@Bean
+	public GetOrderTraceByIdClientPort getOrderTraceByIdClientPort(
+		TraceRepositoryGateway traceRepositoryGateway
+	) {
+		return new GetOrderTraceByIdClientUseCase(
 			traceRepositoryGateway
 		);
 	}

@@ -10,4 +10,7 @@ public class OrderTraceDocApi {
 	public static final String CREATE_ORDER_TRACE_SUMMARY = "Create a new order trace";
 	public static final String CREATE_ORDER_TRACE_DESCRIPTION = "Order trace created successfully";
 	
+	public static final String GET_ORDER_TRACES_SUMMARY = "Get order traces";
+	public static final String GET_ORDER_TRACES_DESCRIPTION = "Order traces retrieved successfully";
+	
 }

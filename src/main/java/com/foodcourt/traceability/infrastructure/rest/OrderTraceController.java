@@ -2,6 +2,7 @@ package com.foodcourt.traceability.infrastructure.rest;
 
 import com.foodcourt.traceability.application.dto.request.CreateOrderTraceRequest;
 import com.foodcourt.traceability.application.handler.OrderTraceHandler;
+import com.foodcourt.traceability.domain.model.ordertrace.OrderTraceSummary;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -9,10 +10,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import static com.foodcourt.traceability.infrastructure.rest.constants.paths.TracePath.BASE;
 import static com.foodcourt.traceability.infrastructure.rest.docapi.OrderTraceDocApi.*;
@@ -36,6 +36,17 @@ public class OrderTraceController {
 		log.trace("createOrderTrace: {}", createOrderTraceRequest);
 		orderTraceHandler.createTrace(createOrderTraceRequest);
 		return ResponseEntity.status(HttpStatus.CREATED).build();
+	}
+	
+	@Operation(summary = GET_ORDER_TRACES_SUMMARY)
+	@ApiResponse(
+		responseCode = "200",
+		description = GET_ORDER_TRACES_DESCRIPTION
+	)
+	@GetMapping
+	ResponseEntity<List<OrderTraceSummary>> getOrderTrace() {
+		log.trace("getOrderTrace");
+		return ResponseEntity.ok(orderTraceHandler.getTracesByIdClient());
 	}
 	
 }

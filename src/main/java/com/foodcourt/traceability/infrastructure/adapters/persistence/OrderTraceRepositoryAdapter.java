@@ -2,11 +2,14 @@ package com.foodcourt.traceability.infrastructure.adapters.persistence;
 
 import com.foodcourt.traceability.domain.gateways.TraceRepositoryGateway;
 import com.foodcourt.traceability.domain.model.ordertrace.OrderTrace;
+import com.foodcourt.traceability.domain.model.ordertrace.OrderTraceSummary;
 import com.foodcourt.traceability.infrastructure.adapters.persistence.data.OrderTraceDataRepository;
 import com.foodcourt.traceability.infrastructure.adapters.persistence.mappers.OrderTraceMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Slf4j
 @Component
@@ -23,4 +26,11 @@ public class OrderTraceRepositoryAdapter implements TraceRepositoryGateway {
 		);
 	}
 	
+	@Override
+	public List<OrderTraceSummary> findByIdClient(Long idClient) {
+		return orderTraceDataRepository.findAllByIdClientOrderByDateTimeDesc(idClient)
+			.stream()
+			.map(OrderTraceMapper.INSTANCE::toDomainSummary)
+			.toList();
+	}
 }
