@@ -20,6 +20,6 @@ public class OrderTraceData {
 	private String newStatus;
 	private Long idEmployee;
 	private String emailEmployee;
-	private String idRestaurant;
+	private Long idRestaurant;
 	
 }
